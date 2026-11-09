@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chloe Michael CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8EF;
+    --bg-panel:#FFFFFF;
+    --ink:#152B1C;
+    --ink-dim:#4E5E51;
+    --ink-faint:#8B9A8C;
+    --gold:#2FA84A;
+    --sage:#12B3B0;
+    --pink:#FF5C7A;
+    --duckegg:#3E6C74;
+    --line:rgba(21,43,28,0.10);
+    --line-strong:rgba(21,43,28,0.22);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold); color:#FBF8EF;}
+
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold);}
+
+  a{color:inherit;}
+
+  /* ---------- nav rail ---------- */
+  #rail{
+    position:fixed; right:32px; top:50%; transform:translateY(-50%);
+    z-index:50; display:flex; flex-direction:column; gap:14px;
+  }
+  .rail-dot{
+    width:9px; height:9px; border-radius:50%; background:transparent;
+    border:1.5px solid var(--line-strong); cursor:pointer; transition:all .35s ease;
+    position:relative;
+  }
+  .rail-dot::after{
+    content:attr(data-label); position:absolute; right:20px; top:50%; transform:translateY(-50%);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-dim);
+    white-space:nowrap; opacity:0; transition:opacity .25s ease; pointer-events:none;
+  }
+  .rail-dot:hover::after{opacity:1;}
+  .rail-dot.active{background:var(--gold); border-color:var(--gold); transform:scale(1.3);}
+  @media (max-width:900px){ #rail{display:none;} }
+
+  section{position:relative; padding:0 8vw;}
+
+  /* ---------- hero ---------- */
+  #hero{
+    padding-top:70px; padding-bottom:20px; display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+  }
+  #hero canvas{position:absolute; inset:0; width:100%; height:100%; opacity:0.5;}
+  .hero-inner{position:relative; z-index:2; max-width:900px;}
+  .hero-name{
+    font-size:clamp(48px,9vw,108px); line-height:0.95; opacity:0; transform:translateY(24px);
+    animation:riseIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .hero-name span{display:block;}
+  .hero-name .last{color:var(--gold);}
+  .hero-role{
+    margin-top:22px; font-size:clamp(15px,2vw,19px); color:var(--ink-dim); max-width:600px;
+    opacity:0; transform:translateY(16px); animation:riseIn .9s cubic-bezier(.2,.8,.2,1) .25s forwards;
+  }
+  .hero-meta{
+    margin-top:40px; display:flex; gap:28px; flex-wrap:wrap;
+    opacity:0; transform:translateY(16px); animation:riseIn .9s cubic-bezier(.2,.8,.2,1) .45s forwards;
+  }
+  .hero-meta a, .hero-meta span{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-faint);
+    text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px; transition:.2s;
+  }
+  .hero-meta a:hover{color:var(--gold); border-color:var(--gold);}
+  @keyframes riseIn{ to{opacity:1; transform:translateY(0);} }
+
+  .scroll-cue{
+    position:absolute; bottom:40px; left:8vw; display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint);
+    opacity:0; animation:riseIn 1s ease .8s forwards;
+  }
+  .scroll-cue .bar{width:1px; height:34px; background:var(--line-strong); position:relative; overflow:hidden;}
+  .scroll-cue .bar::after{
+    content:''; position:absolute; top:-100%; left:0; width:100%; height:100%; background:var(--gold);
+    animation:scrollBar 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollBar{ 0%{top:-100%;} 60%{top:100%;} 100%{top:100%;} }
+
+  /* ---------- section headers ---------- */
+  .section-head{padding:36px 0 24px; max-width:760px;}
+  .section-head h2{font-size:clamp(28px,4vw,42px); margin-top:10px;}
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- stats ---------- */
+  #skills{padding:0 8vw 36px;}
+  .skill-pill{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#FDF3B0;
+    background:#1F7A38; border:1px solid #1F7A38; border-radius:999px;
+    padding:9px 16px; transition:all .3s ease;
+  }
+  .skill-pill:hover{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(21,43,28,0.15); }
+  .skill-pill.c-gold, .skill-pill.c-sage, .skill-pill.c-pink{ color:#FDF3B0; border-color:#1F7A38; }
+  #results{padding:0 8vw 8px;}
+  #stats{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:920px;}
+  .stat{background:var(--bg-panel); border:1px solid var(--line); border-radius:12px; padding:16px 16px 14px; display:flex; flex-direction:column; gap:4px;}
+  .stat-fig{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(24px,3vw,32px); color:#1F7A38; line-height:1.1; font-variant-numeric:tabular-nums;}
+  .stat-cap{font-size:13px; color:var(--ink-dim); line-height:1.4;}
+  .stat-co{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-top:2px;}
+  @media (max-width:760px){ #stats{grid-template-columns:1fr 1fr;} }
+
+  /* ---------- timeline / route ---------- */
+  #experience{padding-bottom:8px;}
+  .route{position:relative; max-width:920px;}
+  .route-line{
+    position:absolute; left:11px; top:8px; bottom:8px; width:2px; background:var(--line);
+    transform-origin:top; transform:scaleY(0); transition:transform 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .route-line.in{transform:scaleY(1);}
+
+  .company{position:relative; padding-left:56px; margin-bottom:26px;}
+  .company-dot{
+    position:absolute; left:0; top:6px; width:24px; height:24px; border-radius:50%;
+    background:var(--bg-panel); border:2px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; transition:all .4s ease;
+  }
+  .company.in .company-dot{border-color:var(--gold); box-shadow:0 0 0 4px rgba(47,168,74,0.14);}
+  .company-dot::after{content:''; width:7px; height:7px; border-radius:50%; background:var(--ink-faint); transition:background .4s ease;}
+  .company.in .company-dot::after{background:var(--gold);}
+
+  .company-head{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; cursor:default;}
+  .company-head h3{font-size:clamp(21px,2.6vw,28px); color:var(--ink);}
+  .company-tenure{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);}
+
+  .role{
+    margin-top:20px; border-top:1px solid var(--line); padding-top:16px;
+  }
+  .role:first-of-type{margin-top:24px;}
+  .role-toggle{
+    display:flex; align-items:center; justify-content:space-between; cursor:pointer;
+    gap:16px; -webkit-tap-highlight-color:transparent;
+  }
+  .role-toggle .rt-left{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
+  .role-title{font-weight:500; font-size:16px;}
+  .role-dates{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);}
+  .role-plus{
+    width:22px; height:22px; flex:0 0 auto; position:relative;
+  }
+  .role-plus::before, .role-plus::after{
+    content:''; position:absolute; background:var(--ink-dim); transition:transform .35s ease, background .3s ease;
+  }
+  .role-plus::before{left:0; top:10px; width:22px; height:1.5px;}
+  .role-plus::after{left:10px; top:0; width:1.5px; height:22px;}
+  .role.open .role-plus::after{transform:rotate(90deg);}
+  .role.open .role-plus::before, .role.open .role-plus::after{background:var(--gold);}
+
+  .role-body{
+    max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .role-body ul{list-style:none; padding:16px 0 6px; display:flex; flex-direction:column; gap:11px;}
+  .role-body li{
+    position:relative; padding-left:18px; font-size:14.5px; color:var(--ink-dim); max-width:680px;
+  }
+  .role-body li::before{content:'—'; position:absolute; left:0; color:var(--sage);}
+
+  /* ---------- consulted ---------- */
+  #consulted{padding:28px 8vw;}
+  .brand-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-top:24px;}
+  .brand-card{
+    background:transparent; border:1px solid var(--line); border-radius:14px;
+    padding:26px 22px; transition:all .35s ease; position:relative; overflow:hidden;
+  }
+  .brand-card::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--accent);
+    transform:scaleY(0); transform-origin:top; transition:transform .4s ease;
+  }
+  .brand-card:hover{border-color:var(--line-strong); transform:translateY(-3px); box-shadow:0 10px 24px rgba(21,43,28,0.08);}
+  .brand-card:hover::before{transform:scaleY(1);}
+  .brand-mark{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(22px,2.6vw,30px); color:var(--accent); letter-spacing:-0.01em;}
+  .brand-cap{margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint);}
+
+  /* ---------- footer grid ---------- */
+  #base{padding:0 8vw 36px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:32px; border-top:1px solid var(--line); padding-top:44px; margin-top:16px;}
+  #base h3{font-size:16px; color:var(--gold); margin-bottom:14px;}
+  #base p, #base li{font-size:14px; color:var(--ink-dim); line-height:1.7;}
+  #base ul{list-style:none;}
+  #base li{margin-bottom:4px;}
+  @media (max-width:800px){ #base{grid-template-columns:1fr;} }
+
+  footer{padding:48px 8vw 60px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  footer p{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);}
+
+  </style>
+</head>
+<body>
+<nav id="rail"></nav>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner">
+    <h1 class="hero-name"><span>Chloe</span><span class="last">Michael</span></h1>
+    <p class="hero-role">Commercial finance and operations leader with over a decade in challenger FMCG brands, including HIPPEAS, Dalston's and Vita Coco. At HIPPEAS ($65 million, 80+ SKUs, 4 co-manufacturers) I own P&amp;L forecasting to gross margin for the US and EBITDA for the UK, present monthly reforecasts to the board, and build the business case behind every new product, customer and supplier decision.</p>
+    <p class="hero-role" style="margin-top:12px;">I started in finance and moved into running the operations it reports on: co-manufacturing, inventory, logistics and S&amp;OP. Knowing where the numbers come from means forecasts that hold up, commentary the business can act on, and cost savings that stick.</p>
+    <div class="hero-meta">
+      <span>Hornchurch, Essex</span>
+      <span>07969 099717</span>
+      <a href="mailto:chloe_michael@outlook.com">chloe_michael@outlook.com</a>
+      <a href="https://linkedin.com/in/chloe-michael-271b8079" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head reveal"><span class="eyebrow"></span><h2>Fluent in...</h2></div>
+  <div class="reveal" style="display:flex; flex-wrap:wrap; gap:10px;">
+    <span class="skill-pill">P&amp;L Forecasting &amp; Reforecasts</span>
+    <span class="skill-pill">Budget vs. Actual Commentary</span>
+    <span class="skill-pill">Board &amp; Leadership Reporting</span>
+    <span class="skill-pill">Business Cases &amp; Margin Analysis</span>
+    <span class="skill-pill">Month-end &amp; Balance Sheet Recs</span>
+    <span class="skill-pill">S&amp;OP &amp; Demand Planning</span>
+    <span class="skill-pill">NPD &amp; EPD Project Management</span>
+    <span class="skill-pill">Co-man &amp; 3PL Tendering</span>
+    <span class="skill-pill">Inventory &amp; Working Capital</span>
+    <span class="skill-pill">Advanced Excel Modelling</span>
+  </div>
+</section>
+
+<section id="results">
+  <div class="section-head reveal" style="padding-top:0;"><span class="eyebrow"></span><h2>Key results...</h2></div>
+  <div id="stats" class="reveal">
+    <div class="stat"><div class="stat-fig">&minus;<span class="num" data-count="9">9</span>%</div><div class="stat-cap">US logistics cost via 3PL re-tender</div><div class="stat-co">HIPPEAS</div></div>
+    <div class="stat"><div class="stat-fig">+<span class="num" data-count="4.8" data-decimals="1">4.8</span>pp</div><div class="stat-cap">Export margin via new EU co-manufacturer</div><div class="stat-co">HIPPEAS</div></div>
+    <div class="stat"><div class="stat-fig">~<span class="num" data-count="80">80</span></div><div class="stat-cap">Launches costed and delivered, UK &amp; US</div><div class="stat-co">HIPPEAS</div></div>
+    <div class="stat"><div class="stat-fig"><span class="num" data-count="70">70</span>%</div><div class="stat-cap">Forecast accuracy (MAPE), up from ~50%</div><div class="stat-co">HIPPEAS</div></div>
+    <div class="stat"><div class="stat-fig"><span class="num" data-count="4">4</span> wks</div><div class="stat-cap">Inventory on hand, down from 7</div><div class="stat-co">HIPPEAS</div></div>
+    <div class="stat"><div class="stat-fig">&minus;<span class="num" data-count="52">52</span>%</div><div class="stat-cap">Unresolved customer claims</div><div class="stat-co">VITA COCO</div></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head reveal"><span class="eyebrow"></span><h2>The journey so far...</h2></div>
+  <div class="route">
+    <div class="route-line"></div>
+    <div class="company" data-name="HIPPEAS">
+      <div class="company-dot"></div>
+      <div class="company-head">
+        <h3><a href="https://hippeas.com" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">HIPPEAS Snacks ↗</a> ✌️</h3>
+        <span class="company-tenure">5 YRS 11 MOS</span>
+      </div>
+      <div class="role open">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Operations &amp; Finance Director – UK &amp; US</span><span class="role-dates">DEC 2023 – PRESENT</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Own P&amp;L forecasting to gross margin (US) and EBITDA (UK); track performance against budget, forecast and prior year, and present monthly reforecasts and the operational plan behind them to the board.</li>
+            <li>Build the costings, margin analysis and business case for every new product, customer and supplier, giving leadership a clear recommendation to approve or decline.</li>
+            <li>Project-manage NPD and EPD end to end, aligning QC, finance, sales and supply chain on volumes and timings: 30 new UK and 50 new US SKUs delivered.</li>
+            <li>Supported the Quality team on the operational response to a quality incident that came close to a product recall.</li>
+            <li>Own the finance month-end cycle, including balance sheet reconciliations, and UK order-to-cash; managed Italian VAT on exports from Italy.</li>
+            <li>Partner US Sales on route-to-market decisions, using trade, promotional spend and logistics analysis to show where margin is won and lost.</li>
+            <li>Ran the business case, tender and negotiation for a new US 3PL warehouse, cutting total logistics costs by 9%.</li>
+            <li>Sourced and onboarded a secondary European co-manufacturer, lifting export SKU margin by 4.8pp and building supply resilience.</li>
+            <li>Set up the US demand planning process, from an Excel model to a software implementation: forecast accuracy (MAPE) up from ~50% to ~70%, service level held at 96%, inventory down from 7 to 4 weeks on hand.</li>
+            <li>Set co-manufacturer utilisation strategy to cut COGS and fulfilment costs while minimising inventory working capital.</li>
+            <li>Use AI tools (Claude) to speed up cost analysis, ROI assessment and forecasting.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Operations &amp; Finance Director – UK</span><span class="role-dates">APR 2021 – NOV 2023</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Took ownership of the UK finance month-end cycle and led the UK annual audit.</li>
+            <li>Ran the UK Dynamics 365 Business Central project and supported the US implementation.</li>
+            <li>Ran UK S&amp;OP and built demand-forecasting partnerships with UK retailer supply chain teams.</li>
+            <li>Led the UK supply chain's move to a distributor model with zero inventory write-offs.</li>
+            <li>Owned the warehouse relationship end to end, including a cost-saving 3PL switch.</li>
+            <li>Managed co-packers, suppliers, production planning, and UK and EU regulatory compliance, including HFSS reformulation and multilingual packaging for Europe.</li>
+            <li>Line-managed 2 people.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Head of UK Operations</span><span class="role-dates">JAN 2021 – MAR 2021</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Joined to lead UK operations, taking on co-packers, warehousing, NPD and S&amp;OP before stepping up to the director role.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="company" data-name="Dalston's Soda">
+      <div class="company-dot"></div>
+      <div class="company-head">
+        <h3><a href="https://dalstons.com" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">Dalston's Soda ↗</a> 🥤</h3>
+        <span class="company-tenure">1 YR 8 MOS</span>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Head of Operations</span><span class="role-dates">APR 2019 – DEC 2020</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Managed an outsourced accounting team and ran month-end processing.</li>
+            <li>Managed S&amp;OP, including collaborative forecasting with grocery supply chain teams that kept stock right and launches on track.</li>
+            <li>Owned the end-to-end supply chain for a challenger soft drinks brand, launching into Europe, the Middle East and the USA.</li>
+            <li>Led NPD from concept to launch and set up a secondary European co-manufacturer to build supply resilience.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="company" data-name="Vita Coco">
+      <div class="company-dot"></div>
+      <div class="company-head">
+        <h3><a href="https://vitacoco.com" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">Vita Coco ↗</a> 🥥</h3>
+        <span class="company-tenure">3 YRS 10 MOS</span>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Supply Chain Manager</span><span class="role-dates">JUL 2017 – MAR 2019</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Built a weekly KPI suite covering customer forecast accuracy, days on hand and a promotional tracker.</li>
+            <li>Managed supply planning across multiple European co-packers and delivered 15 new SKUs across ambient and chilled.</li>
+            <li>Directed raw material procurement and managed stock transitions to limit excess and obsolete inventory; ran SAP period-end stock reconciliations.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Commercial Finance Analyst</span><span class="role-dates">NOV 2016 – JUN 2017</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Produced all sales reporting against budget and forecast with the Sales team, to gross margin.</li>
+            <li>Managed customer credit claims, cutting unresolved claims by 52%.</li>
+            <li>Owned the EDI system and onboarded new customers and warehouses.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Sales Ledger Executive</span><span class="role-dates">MAY 2015 – OCT 2016</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Order-to-invoice processing, remittance allocation, stock reconciliations and credit control.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="company" data-name="Martorana Snacks">
+      <div class="company-dot"></div>
+      <div class="company-head">
+        <h3><span style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">Martorana Snacks</span> 🍝</h3>
+        <span class="company-tenure">2 YRS 0 MOS</span>
+      </div>
+      <div class="role">
+        <div class="role-toggle">
+          <div class="rt-left"><span class="role-title">Finance and Supply Chain Assistant</span><span class="role-dates">APR 2013 – APR 2015</span></div>
+          <div class="role-plus"></div>
+        </div>
+        <div class="role-body">
+          <ul>
+            <li>Tracked cost-to-serve, processed orders and invoices, and ran bank and stock reconciliations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="consulted">
+  <div class="section-head reveal" style="padding-top:0;"><span class="eyebrow"></span><h2>Consulted for brands including...</h2></div>
+  <div class="brand-row reveal">
+    <div class="brand-card" style="--accent:var(--sage);">
+      <div class="brand-mark"><a href="https://eatsurreal.co.uk" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">SURREAL ↗</a> 🥣</div>
+      <div class="brand-cap">Mentored Head of Operations</div>
+    </div>
+    <div class="brand-card" style="--accent:#6E1B34;">
+      <div class="brand-mark" style="font-family:'Archivo Black',sans-serif; letter-spacing:0;"><a href="https://nice-drinks.co.uk" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">NICE ↗</a> 🍷</div>
+      <div class="brand-cap">Supply chain advisory</div>
+    </div>
+    <div class="brand-card" style="--accent:var(--duckegg);">
+      <div class="brand-mark"><a href="https://wypeuk.com" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">wype* ↗</a> 🚽</div>
+      <div class="brand-cap">Supply chain advisory</div>
+    </div>
+  </div>
+</section>
+
+<section id="base">
+  <div class="reveal">
+    <h3>Education</h3>
+    <p><strong style="color:var(--ink);">CIMA, part-qualified</strong><br>Studying towards full qualification</p>
+    <p style="margin-top:12px;"><strong style="color:var(--ink);">BSc (Hons) Banking Practice &amp; Management, 2:1</strong><br>ifs School of Finance, 2011–2014</p>
+    <p style="margin-top:12px;"><strong style="color:var(--ink);">Lean Six Sigma Green Belt</strong></p>
+    <ul style="margin-top:14px;">
+      <li>A Levels: Maths, Product Design, IT, History — Coopers Company &amp; Coborn Sixth Form</li>
+      <li style="margin-top:6px;">GCSEs: 2 A*, 7 A, 2 B, 1 C — Brittons School and Technology College</li>
+    </ul>
+  </div>
+  <div class="reveal">
+    <h3>Systems &amp; tools</h3>
+    <ul>
+      <li>Advanced Excel (forecasting &amp; financial modelling)</li>
+      <li>Dynamics 365 Business Central (UK implementation)</li>
+      <li>SAP (period-end reconciliations)</li>
+      <li>Xero, QuickBooks, Unleashed</li>
+      <li>EDI order processing systems</li>
+      <li>SQL (learning) · GitHub (basic)</li>
+      <li>AI-driven analysis &amp; automation (Claude)</li>
+    </ul>
+  </div>
+  <div class="reveal">
+    <h3>Outside work</h3>
+    <p>At the weekend you'll find me on my bike, or organising the people who are. I'm Social Secretary at my cycling club and have completed two full-distance Ironman triathlons.</p>
+  </div>
+</section>
+
+<footer>
+  <p>CHLOE MICHAEL — COMMERCIAL FINANCE &amp; OPERATIONS LEADER</p>
+  <p>HORNCHURCH, ESSEX / CHLOE_MICHAEL@OUTLOOK.COM</p>
+</footer>
+
+<script>
+  // ---------- hero canvas: drifting route network ----------
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [];
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  function initNodes(){
+    nodes = [];
+    const count = window.innerWidth < 800 ? 16 : 30;
+    for(let i=0;i<count;i++){
+      nodes.push({
+        x: Math.random()*W, y: Math.random()*H,
+        vx: (Math.random()-0.5)*0.15, vy:(Math.random()-0.5)*0.15
+      });
+    }
+  }
+  window.addEventListener('resize', ()=>{resize(); initNodes();});
+  resize(); initNodes();
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    for(const n of nodes){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    }
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d < 170){
+          ctx.strokeStyle = `rgba(18,179,176,${0.16*(1-d/170)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    for(const n of nodes){
+      ctx.fillStyle = 'rgba(47,168,74,0.6)';
+      ctx.beginPath(); ctx.arc(n.x,n.y,1.6,0,7); ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // ---------- scroll reveal ----------
+  const revealItems = document.querySelectorAll('.reveal, .company, .route-line');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.18});
+  revealItems.forEach(el=>io.observe(el));
+
+  // ---------- role accordions ----------
+  document.querySelectorAll('.role').forEach(role=>{
+    const toggle = role.querySelector('.role-toggle');
+    const body = role.querySelector('.role-body');
+    if(role.classList.contains('open')){ body.style.maxHeight = body.scrollHeight+'px'; }
+    toggle.addEventListener('click', ()=>{
+      const isOpen = role.classList.contains('open');
+      if(isOpen){
+        role.classList.remove('open');
+        body.style.maxHeight = 0;
+      } else {
+        role.classList.add('open');
+        body.style.maxHeight = body.scrollHeight+'px';
+      }
+    });
+  });
+  window.addEventListener('resize', ()=>{
+    document.querySelectorAll('.role.open .role-body').forEach(b=> b.style.maxHeight = b.scrollHeight+'px');
+  });
+  const refitOpen = ()=> document.querySelectorAll('.role.open .role-body').forEach(b=> b.style.maxHeight = b.scrollHeight+'px');
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(refitOpen);
+  window.addEventListener('load', refitOpen);
+
+  // ---------- stat counters ----------
+  const statEls = document.querySelectorAll('.stat .num');
+  const statIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseFloat(el.dataset.count);
+        const dec = parseInt(el.dataset.decimals||'0',10);
+        let i = 0; const frames = 30;
+        const iv = setInterval(()=>{
+          i++;
+          const cur = i>=frames ? target : target*i/frames;
+          el.textContent = cur.toFixed(dec);
+          if(i>=frames) clearInterval(iv);
+        }, 35);
+        statIO.unobserve(el);
+      }
+    });
+  }, {threshold:0.5});
+  statEls.forEach(el=>statIO.observe(el));
+
+  // ---------- nav rail ----------
+  const rail = document.getElementById('rail');
+  const companies = document.querySelectorAll('.company');
+  companies.forEach(c=>{
+    const dot = document.createElement('div');
+    dot.className = 'rail-dot';
+    dot.dataset.label = c.dataset.name;
+    dot.addEventListener('click', ()=> c.scrollIntoView({behavior:'smooth', block:'center'}));
+    rail.appendChild(dot);
+  });
+  const railDots = rail.querySelectorAll('.rail-dot');
+  const railIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      const idx = Array.from(companies).indexOf(e.target);
+      if(e.isIntersecting) railDots[idx].classList.add('active');
+      else railDots[idx].classList.remove('active');
+    });
+  }, {threshold:0.4});
+  companies.forEach(c=>railIO.observe(c));
+</script>
+</body>
+</html>
